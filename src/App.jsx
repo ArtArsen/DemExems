@@ -1,5 +1,7 @@
+import { useState } from "react";
+
 function App() {
-  const requests = [
+  const [requests, setRequests] = useState([
     {
       id: 1,
       room: "Аудитория 101",
@@ -17,8 +19,16 @@ function App() {
       room: "Коворкинг",
       date: "2026-10-25",
       status: "Завершено"
-    },
-  ];
+    }
+  ]);
+
+  function deleteRequests(id) {
+    const newRequests = requests.filter((request) => {
+      return request.id !== id;
+    });
+
+    setRequests(newRequests);
+  }
 
   return (
     <main>
@@ -41,6 +51,12 @@ function App() {
             <p>
               Статус: {request.status}
             </p>
+
+            <button
+              onClick={() => deleteRequests(request.id)}
+            >
+              Удалить
+            </button>
           </article>
         ))}
 
