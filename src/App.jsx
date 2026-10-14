@@ -52,6 +52,24 @@ function App() {
     setPayment("");
   }
 
+  function changeStatus(id, newStatus) {
+
+    const newRequests = requests.map((request) => {
+
+      if (request.id === id) {
+
+        return {
+          ...request,
+          status: newStatus
+        };
+      }
+
+      return request;
+    })
+
+    setRequests(newRequests)
+  }
+
   function deleteRequest(id) {
     const newRequests = requests.filter((request) => {
       return request.id !== id;
@@ -154,6 +172,46 @@ function App() {
             >
               Удалить
             </button>
+          </article>
+        ))}
+      </section>
+
+      <section>
+        <h2>Админ панель</h2>
+
+        {requests.map((request) => (
+          <article
+            key={request.id}
+            data-testid="admin-row"
+          >
+            <h2>{request.room}</h2>
+
+            <p>
+              Статус: {request.status}
+            </p>
+
+            <select
+              data-testid="admin-status"
+              value={request.status}
+              onChange={(event) =>
+                changeStatus(
+                  request.id,
+                  event.target.value
+                )
+              }
+            >
+              <option value="Новая">
+                Новая
+              </option>
+
+              <option value="Мероприятие назначено">
+                Мероприятие назначено
+              </option>
+
+              <option value="Завершено">
+                Завершено
+              </option>
+            </select>
           </article>
         ))}
       </section>
