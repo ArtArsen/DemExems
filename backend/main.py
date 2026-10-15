@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from schemas import RequestCreate
 
 app = FastAPI()
 
@@ -26,16 +27,20 @@ requests_data = [
         "payment": "sbp",
         "status": "Мероприятие назначено"
     },
-    {
-        "id": 3,
-        "room": "Коворкинг",
-        "date": "2026-10-25",
-        "payment": "cash",
-        "status": "Завершено"
-    }
 ]
 
 @app.get("/requests")
 def get_requests():
     return requests_data
 
+
+@app.post("/requests")
+def create_request(request: RequestCreate):
+
+    new_request = {
+        "id": len(requests_data) + 1,
+        "room": request.room,
+        "data": request.data,
+        "payment": request.payment,
+        
+    }
