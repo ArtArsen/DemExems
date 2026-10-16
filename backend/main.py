@@ -40,7 +40,11 @@ def create_request(request: RequestCreate):
     new_request = {
         "id": len(requests_data) + 1,
         "room": request.room,
-        "data": request.data,
+        "data": request.date,
         "payment": request.payment,
-        
+        "status": "Новая"
     }
+
+    requests_data.append(new_request)
+
+    return new_request
